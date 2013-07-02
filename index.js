@@ -18,6 +18,10 @@ function Buffer(subject, encoding, offset) {
   if (typeof offset === 'number') {
     this.length = coerce(encoding);
     this.offset = offset;
+
+    for(var i = 0; i < this.length; i++){
+        this[i] = subject.get(i+offset);
+    }
   } else {
     // Find the length
     switch (type = typeof subject) {
