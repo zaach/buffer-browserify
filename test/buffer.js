@@ -1,4 +1,5 @@
 var B = require('../index.js').Buffer;
+
 var test = require('tape');
 
 test('utf8 buffer to base64', function (t) {
@@ -230,5 +231,15 @@ test('copy() empty buffer with sourceEnd=0', function (t) {
     var destination = new B([43]);
     source.copy(destination, 0, 0, 0);
     t.equal(destination.readUInt8(0), 43);
+    t.end();
+});
+
+test('slice()', function (t) {
+    t.plan(2);
+    var source = new B('deadbeef', 'hex');
+    var first = source.slice(0, 2);
+    var second = source.slice(2, 4);
+    t.equal(first.toString('hex'), 'dead', 'first slice equal');
+    t.equal(second.toString('hex'), 'beef', 'second slice equal');
     t.end();
 });
