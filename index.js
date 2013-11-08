@@ -295,14 +295,28 @@ Buffer.prototype.write = function(string, offset, length, encoding) {
 
 // slice(start, end)
 Buffer.prototype.slice = function(start, end) {
-  if (end === undefined) end = this.length;
+  var len = this.length;
+  start = ~~start;
+  end = end === undefined ? len : ~~end;
 
-  if (end > this.length) {
-    throw new Error('oob');
+  if (start < 0) {
+    start += len;
+    if (start < 0)
+      start = 0;
+  } else if (start > len) {
+    start = len;
   }
-  if (start > end) {
-    throw new Error('oob');
+
+  if (end < 0) {
+    end += len;
+    if (end < 0)
+      end = 0;
+  } else if (end > len) {
+    end = len;
   }
+
+  if (end < start)
+    end = start;
 
   return new Buffer(this, end - start, +start);
 };

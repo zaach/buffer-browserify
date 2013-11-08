@@ -243,3 +243,13 @@ test('slice()', function (t) {
     t.equal(second.toString('hex'), 'beef', 'second slice equal');
     t.end();
 });
+
+test('slice() with negatives', function (t) {
+    t.plan(2);
+    var source = new B('deadbeef', 'hex');
+    var first = source.slice(-2);
+    var second = source.slice(0, -2);
+    t.equal(first.toString('hex'), 'beef', 'first slice equal');
+    t.equal(second.toString('hex'), 'dead', 'second slice equal');
+    t.end();
+});
